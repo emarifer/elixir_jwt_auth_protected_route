@@ -1,0 +1,30 @@
+<% import ElixirJwtAuthProtectedRoute.Web.User.HtmlFlash %>
+
+<%= if kind && msg do %>
+  <%= flash(kind, msg) %>
+<% end %>
+
+<button
+  hx-get="/auth/logout"
+  hx-swap="transition:true"
+  hx-target="body"
+  hx-push-url="/auth/login"
+  hx-confirm="Are you sure you want to log out?"
+  class="absolute top-2 left-2 z-10 btn btn-ghost btn-xs btn-outline"
+>
+  Logout
+</button>
+
+<section class="w-fit mx-auto flex flex-col gap-4 mt-12 justify-center">
+  <h1 class="text-3xl font-semibold text-center">Protected Page</h1>
+
+  <p class="font-light text-lg text-lime-600 text-center">
+      Welcome, user <span class="font-extrabold italic"><%= String.capitalize(user) %></span>&nbsp;!
+  </p>
+
+  <br />
+
+  <a href="/auth/register" hx-swap="transition:true" class="hover:underline hover:text-lime-400 text-sm">
+      Go to Register Page
+  </a>
+</section>

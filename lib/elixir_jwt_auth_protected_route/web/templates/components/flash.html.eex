@@ -1,0 +1,12 @@
+<%= if kind=="success" do %>
+	<div _="on load wait 3s then remove me"
+		class="absolute top-1 right-1 z-10 text-center max-w-[350px] px-5 py-3 text-xs text-zinc-800 rounded-lg bg-teal-200 border border-teal-600 capitalize">
+		<%= msg %>
+	</div>
+<% end %>
+<%= if kind=="warning" do %>
+	<div _="on load wait 3s then remove me"
+		class="absolute top-1 right-1 z-10 text-center max-w-[350px] px-5 py-3 text-xs text-zinc-800 rounded-lg bg-amber-300 border border-amber-800 capitalize">
+		<%= msg %>
+	</div>
+<% end %>

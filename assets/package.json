@@ -1,0 +1,27 @@
+{
+  "name": "elixir_jwt_auth_protected_route",
+  "version": "1.0.0",
+  "description": "Demo web application for authentication with JWT and protected pages",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
+  },
+  "scripts": {
+    "watch-css": "npx tailwindcss -i ./css/app.css -o ../priv/static/assets/css/app.css --watch",
+    "build-css-prod": "npx tailwindcss -i ./css/app.css -o ../priv/static/assets/css/app.css --minify"
+  },
+  "keywords": [
+    "Plug",
+    "Bandit",
+    "Htmx",
+    "Elixir",
+    "JWT"
+  ],
+  "author": "emarifer",
+  "license": "MIT",
+  "devDependencies": {
+    "daisyui": "^4.12.22",
+    "tailwindcss": "^3.4.17"
+  }
+}

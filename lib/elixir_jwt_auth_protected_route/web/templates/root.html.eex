@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="google" content="notranslate" />
+
+  <meta name="htmx-config" content='{
+            "responseHandling":[
+                {"code":"204", "swap": false},
+                {"code":"[23]..", "swap": true},
+                {"code":"422", "swap": true},
+                {"code":"[45]..", "swap": true, "error":true, "target":"body"},
+                {"code":"...", "swap": true}
+            ]
+        }' />
+
+  <title>
+    <%= title %>
+  </title>
+  <link rel="icon" type="image/svg+xml" href="/static/assets/images/favicon.svg">
+  <link rel="stylesheet" href="/static/assets/css/app.css" />
+  <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.7/dist/htmx.min.js"
+    integrity="sha384-ZBXiYtYQ6hJ2Y0ZNoYuI+Nq5MqWBr+chMrS/RkXpNzQCApHEhOt2aY8EJgqwHLkJ"
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/hyperscript.org@0.9.14"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Merriweather+Sans:ital,wght@0,300..800;1,300..800&display=swap"
+    rel="stylesheet">
+</head>
+
+<body class="sample-transition" hx-boost="true">
+  <main>
+    <%= inner_content %>
+  </main>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+<% import ElixirJwtAuthProtectedRoute.Web.User.HtmlFlash %>
+
+<%= if kind && msg do %>
+  <%= flash(kind, msg) %>
+<% end %>
+
+<section class="w-fit mx-auto flex flex-col gap-4 mt-12 justify-center">
+  <h1 class="text-3xl font-semibold text-center">Register User</h1>
+
+  <form method="post" action="/auth/register" class="flex flex-col gap-4 rounded-xl bg-zinc-900 p-4"
+    hx-swap="transition:true">
+    <input class="input input-bordered bg-slate-800 w-[400px] text-sm h-8" type="text" minlength="3"
+      name="username" required autofocus placeholder="Username ..." />
+    <input class="input input-bordered bg-slate-800 w-[400px] text-sm h-8" type="text" minlength="6"
+      name="hashed_password" required placeholder="Password ..." />
+
+    <div class="w-full flex justify-end mt-4">
+      <input class="btn btn-ghost btn-sm btn-outline w-fit" type="submit" value="Signup">
+    </div>
+  </form>
+
+  <br />
+
+  <a href="/auth/login" hx-swap="transition:true" class="hover:underline hover:text-lime-400 text-sm">
+    Are you already registered?
+  </a>
+</section>
