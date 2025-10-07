@@ -4,6 +4,7 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Controller do
 
   alias ElixirJwtAuthProtectedRoute.Web.User.Html, as: UserHtml
   alias ElixirJwtAuthProtectedRoute.Web.User.JwtConfig, as: Jwt
+  alias ElixirJwtAuthProtectedRoute.Web.User.Message
   alias ElixirJwtAuthProtectedRoute.Users, as: UsersContext
   alias ElixirJwtAuthProtectedRoute.Users.User
 
@@ -42,7 +43,7 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Controller do
     with {:ok, _} <- UsersContext.register_user(bparams) do
       conn
       |> put_resp_header("location", "/auth/login")
-      |> set_flash_msg("success", "You have successfully signup")
+      |> Message.set_flash_msg("success", "You have successfully signup")
       |> send_resp(303, "")
     else
       {:error, err} ->
@@ -50,7 +51,7 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Controller do
 
         conn
         |> put_resp_header("location", "/auth/register")
-        |> set_flash_msg("warning", flash_msg)
+        |> Message.set_flash_msg("warning", flash_msg)
         |> send_resp(303, "")
     end
   end
@@ -65,7 +66,7 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Controller do
     case UsersContext.get_user_by_name(name) do
       [] ->
         conn
-        |> set_flash_msg("warning", "the user does not exist")
+        |> Message.set_flash_msg("warning", "the user does not exist")
         |> put_resp_header("location", "/auth/login")
         |> send_resp(303, "")
 
@@ -80,13 +81,13 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Controller do
             conn
             |> put_resp_header("location", "/protected")
             |> put_resp_cookie("jwt", jwt, max_age: 60, path: "/", http_only: true)
-            |> set_flash_msg("success", "you have successfully logged in")
+            |> Message.set_flash_msg("success", "you have successfully logged in")
             |> send_resp(303, "")
 
           false ->
             conn
             |> put_resp_header("location", "/auth/login")
-            |> set_flash_msg("warning", "incorrect password")
+            |> Message.set_flash_msg("warning", "incorrect password")
             |> send_resp(303, "")
         end
     end
@@ -95,19 +96,5 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Controller do
   get "/logout" do
     UserHtml.login(@title <> " | Login", nil, "success", "you have successfully logged out")
     |> then(&send_resp(delete_resp_cookie(conn, "jwt"), 200, &1))
-  end
-
-  defp set_flash_msg(conn, kind, msg) do
-    flash_enc =
-      Jason.encode!(%{kind: kind, msg: msg})
-      |> Base.encode64(padding: false)
-
-    # `http_only: true` ==> meant only for the server
-    conn
-    |> put_resp_cookie("flash_msg", flash_enc,
-      max_age: 1,
-      path: "/",
-      http_only: true
-    )
   end
 end

@@ -2,7 +2,11 @@
 
 # elixir_jwt_auth_protected_route
 
-Demo web app with Bandit, Plug and Htmx, with JWT authentication of protected routes (not Phoenix).
+#### Demo web app with Plug, Bandit, Joken and Htmx, with JWT authentication of protected routes (not Phoenix).
+
+<br />
+
+<img src="docs/screenshot.gif" width="70%">
 
 <br /><br />
 

@@ -16,6 +16,20 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Message do
     end
   end
 
+  def set_flash_msg(conn, kind, msg) do
+    flash_enc =
+      Jason.encode!(%{kind: kind, msg: msg})
+      |> Base.encode64(padding: false)
+
+    # `http_only: true` ==> meant only for the server
+    conn
+    |> put_resp_cookie("flash_msg", flash_enc,
+      max_age: 1,
+      path: "/",
+      http_only: true
+    )
+  end
+
   defp get_flash_msg(conn) do
     flash = fetch_cookies(conn).req_cookies["flash_msg"]
 

@@ -2,6 +2,7 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Auth do
   import Plug.Conn
 
   alias ElixirJwtAuthProtectedRoute.Web.User.JwtConfig, as: Jwt
+  alias ElixirJwtAuthProtectedRoute.Web.User.Message
 
   def init(opts), do: opts
 
@@ -22,7 +23,14 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Auth do
           conn
       end
     else
-      conn
+      case conn.request_path do
+        "/protected" ->
+          conn
+          |> Message.set_flash_msg("warning", "you don't have authorization")
+
+        _ ->
+          conn
+      end
     end
   end
 end
