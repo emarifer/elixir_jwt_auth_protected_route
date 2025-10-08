@@ -6,7 +6,7 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Auth do
 
   def init(opts), do: opts
 
-  def call(conn, _opt) do
+  def call(conn, _opts) do
     conn = fetch_cookies(conn)
     token = conn.req_cookies["jwt"]
     #  |> IO.inspect(label: "TOKEN")

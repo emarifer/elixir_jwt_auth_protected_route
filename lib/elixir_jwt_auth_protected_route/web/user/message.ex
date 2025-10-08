@@ -3,7 +3,7 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Message do
 
   def init(opts), do: opts
 
-  def call(conn, _opt) do
+  def call(conn, _opts) do
     if fetch_cookies(conn).req_cookies["flash_msg"] do
       {kind, msg} = get_flash_msg(conn)
 

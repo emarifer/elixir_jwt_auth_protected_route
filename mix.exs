@@ -38,7 +38,8 @@ defmodule ElixirJwtAuthProtectedRoute.MixProject do
   # NOTE: `jason` is a dependency of the Erlang `jose` library,
   # which is itself a dependency of `Joken` (a transitive dependency).
   # It is not installed automatically, so it must be declared specifically.
-  # See: https://hexdocs.pm/jose/readme.html#installation
+  # See: https://hexdocs.pm/joken/readme.html#usage
+  # and also this: https://hexdocs.pm/jose/readme.html#installation
 
   # Aliases are shortcuts or tasks specific to the current project.
   # For example, to install project dependencies and perform other setup tasks, run:
@@ -48,9 +49,19 @@ defmodule ElixirJwtAuthProtectedRoute.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup"],
+      setup: [&add_js_deps/1, &generate_css/1, "deps.get", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate"],
       "ecto.reset": ["ecto.drop", "ecto.setup"]
     ]
+  end
+
+  # add js dependencies automatically (Tailwind CSS & daisyUI).
+  defp add_js_deps(_) do
+    System.cmd("npm", ["install"], cd: "assets")
+  end
+
+  # generates the file `priv/static/assets/css/app.css` through Tailwind CSS.
+  defp generate_css(_) do
+    System.cmd("npm", ["run build-css-prod"], cd: "assets")
   end
 end
