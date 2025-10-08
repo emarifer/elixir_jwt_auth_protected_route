@@ -46,8 +46,19 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Controller do
       |> Message.set_flash_msg("success", "You have successfully signup")
       |> send_resp(303, "")
     else
-      {:error, err} ->
-        %Ecto.Changeset{errors: [username: {flash_msg, _}]} = err
+      {:error, changeset_err} ->
+        # %Ecto.Changeset{errors: [username: {flash_msg, _}]} = changeset_err
+
+        %{username: [msg]} =
+          Ecto.Changeset.traverse_errors(changeset_err, fn {msg, opts} ->
+            Enum.reduce(opts, msg, fn {key, value}, acc ->
+              String.replace(acc, "%{#{key}}", to_string(value))
+            end)
+          end)
+
+        # ↑↑ See: https://hexdocs.pm/ecto/Ecto.Changeset.html#traverse_errors/2
+
+        flash_msg = "username: #{msg}"
 
         conn
         |> put_resp_header("location", "/auth/register")
