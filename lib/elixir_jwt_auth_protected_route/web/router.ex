@@ -32,16 +32,12 @@ defmodule ElixirJwtAuthProtectedRoute.Web.Router do
 
   # protected
   get "/protected" do
-    # IO.inspect(conn.assigns[:user], label: "USER ASSIGNS")
     flash_kind = conn.assigns[:flash_kind]
     flash_msg = conn.assigns[:flash_msg]
-    # IO.inspect(flash_msg, label: "SUCCESS MSG LOGIN")
 
     case conn.assigns[:user] do
       nil ->
         conn
-        |> put_resp_header("location", "/auth/login")
-        |> send_resp(303, "")
 
       user ->
         conn
