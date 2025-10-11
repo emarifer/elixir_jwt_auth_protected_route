@@ -26,23 +26,35 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Auth do
           # |> IO.inspect(label: "USER")
           assign(conn, :user, user)
 
-        {:error, reason} ->
-          IO.inspect(reason, label: "REASON")
-          conn
+        {:error, token_error} ->
+          if Keyword.keyword?(token_error) and
+               Keyword.has_key?(token_error, :message) do
+            conn
+            |> delete_resp_cookie("jwt")
+            |> unauthorized_message(Keyword.fetch!(token_error, :message))
+          else
+            conn
+            |> delete_resp_cookie("jwt")
+            |> unauthorized_message("token validation error")
+          end
       end
     else
-      case conn.request_path do
-        "/protected" ->
-          conn
-          |> Message.set_flash_msg("warning", "you don't have authorization")
-          |> put_resp_header("location", "/auth/login")
-          |> send_resp(303, "")
-          |> halt()
+      unauthorized_message(conn, "you don't have authorization")
+    end
+  end
 
-        _ ->
-          # IO.inspect(conn.request_path, label: "REQUEST PATH")
-          conn
-      end
+  defp unauthorized_message(conn, msg) do
+    case conn.request_path do
+      "/protected" ->
+        conn
+        |> Message.set_flash_msg("warning", msg)
+        |> put_resp_header("location", "/auth/login")
+        |> send_resp(303, "")
+        |> halt()
+
+      _ ->
+        # IO.inspect(conn.request_path, label: "REQUEST PATH")
+        conn
     end
   end
 end

@@ -91,7 +91,7 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Controller do
 
             conn
             |> put_resp_header("location", "/protected")
-            |> put_resp_cookie("jwt", jwt, max_age: 60, path: "/", http_only: true)
+            |> put_resp_cookie("jwt", jwt, max_age: 90, path: "/", http_only: true)
             |> Message.set_flash_msg("success", "you have successfully logged in")
             |> send_resp(303, "")
 
