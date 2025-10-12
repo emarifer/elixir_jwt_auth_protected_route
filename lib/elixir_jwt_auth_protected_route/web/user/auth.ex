@@ -24,7 +24,13 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Auth do
         {:ok, claims} ->
           user = claims["sub"]
           # |> IO.inspect(label: "USER")
+
           assign(conn, :user, user)
+
+        {:error, :signature_error} ->
+          conn
+          |> delete_resp_cookie("jwt")
+          |> unauthorized_message("signature error")
 
         {:error, token_error} ->
           if Keyword.keyword?(token_error) and
@@ -53,7 +59,6 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Auth do
         |> halt()
 
       _ ->
-        # IO.inspect(conn.request_path, label: "REQUEST PATH")
         conn
     end
   end
