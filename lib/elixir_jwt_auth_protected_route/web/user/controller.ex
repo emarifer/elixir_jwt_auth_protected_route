@@ -108,4 +108,8 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Controller do
     UserHtml.login(@title <> " | Login", nil, "success", "you have successfully logged out")
     |> then(&send_resp(delete_resp_cookie(conn, "jwt"), 200, &1))
   end
+
+  match _ do
+    send_resp(conn, 404, "oops")
+  end
 end

@@ -27,18 +27,18 @@ defmodule ElixirJwtAuthProtectedRoute.Web.User.Auth do
 
           assign(conn, :user, user)
 
-        {:error, :signature_error} ->
+        {:error, token_error} when is_atom(token_error) ->
           conn
           |> delete_resp_cookie("jwt")
-          |> unauthorized_message("signature error")
+          |> unauthorized_message(Atom.to_string(token_error) |> String.replace("_", " "))
 
-        {:error, token_error} ->
-          if Keyword.keyword?(token_error) and
-               Keyword.has_key?(token_error, :message) do
+        {:error, token_error} when is_list(token_error) ->
+          if Keyword.has_key?(token_error, :message) do
             conn
             |> delete_resp_cookie("jwt")
             |> unauthorized_message(Keyword.fetch!(token_error, :message))
           else
+            # catch-all
             conn
             |> delete_resp_cookie("jwt")
             |> unauthorized_message("token validation error")
