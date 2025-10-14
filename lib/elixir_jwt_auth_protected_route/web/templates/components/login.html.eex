@@ -21,28 +21,62 @@
   <h1 class="text-3xl font-semibold text-center">Log In</h1>
 
   <%= if !user do %>
-    <form method="post" action="/auth/signin" class="flex flex-col gap-4 rounded-xl bg-zinc-900 p-4" hx-swap="transition:true">
-      <input class="input input-bordered bg-slate-800 w-[400px] text-sm h-8" type="text" minlength="3" name="username" required   autofocus placeholder="Username ..." />
-      <input class="input input-bordered bg-slate-800 w-[400px] text-sm h-8" type="text" minlength="6" name="hashed_password" required  placeholder="Password ..." />
+    <form
+      method="post"
+      action="/auth/signin"
+      class="flex flex-col gap-4 rounded-xl bg-zinc-900 p-4"
+      hx-swap="transition:true"
+    >
+      <input
+        class="input input-bordered bg-slate-800 w-[400px] text-sm h-8"
+        type="text"
+        minlength="3"
+        name="username"
+        required
+        autofocus
+        placeholder="Username ..."
+      />
+      <input
+        class="input input-bordered bg-slate-800 w-[400px] text-sm h-8"
+        type="text"
+        minlength="6"
+        name="hashed_password"
+        required
+        placeholder="Password ..."
+      />
 
       <div class="w-full flex justify-end mt-4">
-        <input class="btn btn-ghost btn-sm btn-outline w-fit" type="submit"   value="Signin">
+        <input
+          class="btn btn-ghost btn-sm btn-outline w-fit"
+          type="submit"
+          value="Signin"
+        />
       </div>
     </form>
 
     <br />
 
-    <a href="/auth/register" hx-swap="transition:true" class="hover:underline hover:text-lime-400 text-sm">
+    <a
+      href="/auth/register"
+      hx-swap="transition:true"
+      class="hover:underline hover:text-lime-400 text-sm"
+    >
       Go to the Register Page
     </a>
   <% else %>
     <p class="font-light text-lg text-lime-600">
-      You are now logged in as <span class="font-extrabold italic"><%= String.capitalize(user) %></span>&nbsp;!
+      You are now logged in as
+      <span class="font-extrabold italic"><%= String.capitalize(user) %></span
+      >&nbsp;!
     </p>
 
     <br />
 
-    <a href="/protected" hx-swap="transition:true" class="hover:underline hover:text-lime-400 text-sm">
+    <a
+      href="/protected"
+      hx-swap="transition:true"
+      class="hover:underline hover:text-lime-400 text-sm"
+    >
       Go to Protected Page
     </a>
   <% end %>

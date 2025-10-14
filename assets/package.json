@@ -22,6 +22,8 @@
   "license": "MIT",
   "devDependencies": {
     "daisyui": "^4.12.22",
+    "prettier": "2.2.0",
+    "prettier-plugin-eex": "0.5.0",
     "tailwindcss": "^3.4.17"
   }
 }

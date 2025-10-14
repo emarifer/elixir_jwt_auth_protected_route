@@ -19,12 +19,18 @@
   <h1 class="text-3xl font-semibold text-center">Protected Page</h1>
 
   <p class="font-light text-lg text-lime-600 text-center">
-      Welcome, user <span class="font-extrabold italic"><%= String.capitalize(user) %></span>&nbsp;!
+    Welcome, user
+    <span class="font-extrabold italic"><%= String.capitalize(user) %></span
+    >&nbsp;!
   </p>
 
   <br />
 
-  <a href="/auth/register" hx-swap="transition:true" class="hover:underline hover:text-lime-400 text-sm">
-      Go to Register Page
+  <a
+    href="/auth/register"
+    hx-swap="transition:true"
+    class="hover:underline hover:text-lime-400 text-sm"
+  >
+    Go to Register Page
   </a>
 </section>
